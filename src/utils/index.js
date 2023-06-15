@@ -5,3 +5,16 @@ export const newDateNote = () => {
     .toString()
     .padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`
 }
+
+export function generateRandomId() {
+  const characters = '0123456789!@#$%^&*()_-+=<>?';
+  const idLength = 20;
+  let id = '';
+
+  for (let i = 0; i < idLength; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    id += characters.charAt(randomIndex);
+  }
+
+  return id;
+}

@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 function Note({ note, deleteNotes, updateNote, newDateNote }) {
-  console.log({note})
   const { description, date } = note
   const [isEditing, setIsEditing] = useState(false);
   const [inputTextEdit, setInputTextEdit] = useState(description ? description : "")
@@ -35,7 +34,7 @@ function Note({ note, deleteNotes, updateNote, newDateNote }) {
   }
 
   return (
-    <div className="todo">
+    <div className="note">
       {isEditing ? (
         <>
           <h3>Edita tu nota:</h3>
@@ -45,16 +44,16 @@ function Note({ note, deleteNotes, updateNote, newDateNote }) {
             placeholder='Escribe tu comentario'
             onChange={handleChange}
           />
-          <div className="comment-card-buttons">
+          <div className="note-card-buttons">
             <button
-              className="comment-card-buttons__comment"
+              className="note-card-buttons__comment"
               onClick={handleSaveClick}
               disabled={!inputTextEdit}
             >
               Guardar
             </button>
             <button
-              className="comment-card-buttons__comment"
+              className="note-card-buttons__comment"
               onClick={handleCancelClick}
               style={{
                 backgroundColor: 'red'
@@ -70,22 +69,23 @@ function Note({ note, deleteNotes, updateNote, newDateNote }) {
             {description}, {" "}
             <strong>{date}.</strong>
           </p>
-          <div className="comment-card-buttons">
+          <div className="note-card-buttons">
             <button
-              className="comment-card-buttons__comment"
-              onClick={deleteNotes}
-              style={{
-                backgroundColor: 'red'
-              }}
-            >
-              Eliminar
-            </button>
-            <button
-              className="comment-card-buttons__comment"
+              className="note-card-buttons__comment"
               onClick={handleUpdateClick}
             >
               Editar
             </button>
+            <button
+              className="note-card-buttons__comment"
+              onClick={deleteNotes}
+              style={{
+                backgroundColor: '#e91e63'
+              }}
+            >
+              Eliminar
+            </button>
+
           </div>
         </>
       )}
