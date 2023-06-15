@@ -1,0 +1,86 @@
+.container-app {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100vw;
+  align-items: center;
+  gap: 20px;
+}
+
+.notes {
+  margin: 80px 0;
+}
+.comment-card {
+  border-radius: 5px;
+  border: 3px solid var(--color-shadow, currentColor);
+  box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, currentColor);
+  padding: 10px 20px;
+  margin: 30px 15px;
+}
+
+.comment-card-input {
+  position: relative;
+}
+
+.comment-card-input__label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: calc(0.5rem * 0.75) calc(0.5rem * .5);
+  margin: calc(0.5rem * 0.75 + 3px) calc(0.5rem * .5);
+  background: pink;
+  white-space: nowrap;
+  transform: translate(0, 0);
+  transform-origin: 0 0;
+  background: #252525;
+  transition: transform 120ms ease-in;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.input__field {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border: 3px solid currentColor;
+  padding: calc(0.5rem * 1.5) 0.5rem;
+  color: currentColor;
+  background: transparent;
+  border-radius: 5px;
+}
+
+.input__field:focus+.comment-card-input__label,
+.input__field:not(:placeholder-shown)+.comment-card-input__label {
+  transform: translate(0.25rem, -75%) scale(0.9);
+  /* color: #206bd5; */
+}
+
+.comment-card-buttons {
+  margin-top: calc(0.5rem * 2.5);
+}
+
+.comment-card-buttons__comment {
+  color: currentColor;
+  padding: 0.5rem calc(0.5rem * 2);
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  font-weight: 900;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.comment-card-buttons__comment:hover {
+  border-color: black;
+  background-color: white;
+  color: black;
+}
+
+.comment-card-buttons__comment:disabled {
+  opacity: .5;
+  cursor: no-drop;
+}
+
+.comment-card-buttons__comment+.comment-card-buttons__comment {
+  margin-left: calc(0.5rem * 2);
+}
