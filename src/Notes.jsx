@@ -1,12 +1,25 @@
-import { useState } from 'react';
-import Note from './components/Note.jsx'
+import { useState, useEffect } from 'react';
 import { newDateNote, generateRandomId } from './utils/index.js'
+import { Note } from './components/Note.jsx'
+import { Loading } from './components/Loading.jsx';
+import { NoteCardSearch } from './components/NoteCardSearch.jsx';
+import { NoteCardCreate } from './components/NoteCardCreate.jsx';
+import { SwitchBtn } from './components/SwitchBtn.jsx';
 import "./Notes.css"
 
 const Notes = () => {
   const [inputText, setInputText] = useState("")
   const [seacrhNoteForm, setSeacrhNoteForm] = useState("")
   const [foundNotes, setFoundNotes] = useState("")
+  const [switchBtn, setSwitchBtn] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 1500)
+  }, [seacrhNoteForm])
 
   const [notes, setNotes] = useState(() => {
     const myNoteListStorage = window.localStorage.getItem('noteListStorage')
@@ -48,7 +61,7 @@ const Notes = () => {
     const newNoteList = [...notes, newNote]
 
     window.localStorage.setItem('noteListStorage', JSON.stringify(newNoteList))
-    
+
     setNotes(newNoteList);
     setInputText("")
   }
@@ -61,78 +74,60 @@ const Notes = () => {
     setSeacrhNoteForm(searchValue);
   };
 
+  const addNote = () => {
+    setSwitchBtn(!switchBtn)
+    setSeacrhNoteForm("")
+  }
+
   return (
     <div className='container-app'>
       <section className='notes'>
-        <div className="note-card">
-          <h2>
-            Buscar nota:
-          </h2>
-          <label className="note-card-input">
-            <input
-              className="input__field"
-              type="text"
-              placeholder=" "
+        <SwitchBtn
+          value={switchBtn}
+          fnOnChange={addNote}
+        />
+
+        {switchBtn
+          ? (
+            <NoteCardSearch
+              text='Buscar nota:'
               value={seacrhNoteForm}
-              onChange={(e) => searchNote(e)}
-              disabled={notes.length === 0}
+              setValue={setSeacrhNoteForm}
+              fnOnChage={searchNote}
+              arraySize={notes}
             />
-            <span className="note-card-input__label">
-              {notes.length === 0 ? '*Crea primero una nota*' : 'Escribe una palabra clave'}
-            </span>
-          </label>
-          <div className="note-card-buttons">
-            <button
-              onClick={() => setSeacrhNoteForm("")}
-              className="note-card-buttons__comment"
-              disabled={!seacrhNoteForm}
-              >
-              Todas las notas
-            </button>
-          </div>
-        </div>
-        <div className="note-card">
-          <h2>
-            Crear nota:
-          </h2>
-          <label className="note-card-input">
-            <textarea
-              className="input__field"
-              type="text"
-              placeholder=" "
+          ) : (
+            <NoteCardCreate
+              text='Crear nota:'
               value={inputText}
-              onChange={handleChange}
-              style={{minHeight: '150px', width: '100%', resize: 'none',}}
+              fnHandleChange={handleChange}
+              fnOnClick={handleClick}
             />
-            <span className="note-card-input__label">Escribe tu nota</span>
-          </label>
-          <div className="note-card-buttons">
-            <button
-              onClick={handleClick}
-              disabled={!inputText}
-              className="note-card-buttons__comment"
-            >
-              Crear nota
-            </button>
-          </div>
-        </div>
+          )
+        }
       </section>
       {seacrhNoteForm !== ''
         ? (
-          <div>
-            <h2>Notas Encontradas: {foundNotes.length}</h2>
-            {foundNotes.map((note, index) => (
-              <div key={index} className='note-card'>
-                <Note
-                  note={note}
-                  deleteNotes={() => deleteNotes(note.id)}
-                  updateNote={(updatedNoteEdit) => updateNote(index, updatedNoteEdit)}
-                  newDateNote={newDateNote}
-                />
-                <span className='note-card__span'>{index + 1}</span>
+          isLoading
+            ? (
+              <Loading />
+            )
+            : (
+              <div>
+                <h2>Notas Encontradas: {foundNotes.length}</h2>
+                {foundNotes.map((note, index) => (
+                  <div key={index} className='note-card'>
+                    <Note
+                      note={note}
+                      deleteNotes={() => deleteNotes(note.id)}
+                      updateNote={(updatedNoteEdit) => updateNote(index, updatedNoteEdit)}
+                      newDateNote={newDateNote}
+                    />
+                    <span className='note-card__span'>{index + 1}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            )
         ) : (
           <section className='note'>
             <h1>NOTAS CREADAS: {notes.length}.</h1>

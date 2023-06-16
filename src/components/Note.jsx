@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import './style/Note.css'
 
-function Note({ note, deleteNotes, updateNote, newDateNote }) {
+export function Note({ note, deleteNotes, updateNote, newDateNote }) {
   const { description, date } = note
   const [isEditing, setIsEditing] = useState(false);
   const [inputTextEdit, setInputTextEdit] = useState(description ? description : "")
