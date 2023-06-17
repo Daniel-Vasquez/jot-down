@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import './style/Note.css'
 
-export function Note({ note, deleteNotes, updateNote, newDateNote }) {
-  const { description, date } = note
+export function Note({ notes, findNotes, note, deleteNotes, updateNote, newDateNote, SetSearchText }) {
+  const { description, date, editedText } = note
   const [isEditing, setIsEditing] = useState(false);
   const [inputTextEdit, setInputTextEdit] = useState(description ? description : "")
 
@@ -15,14 +15,24 @@ export function Note({ note, deleteNotes, updateNote, newDateNote }) {
   const handleSaveClick = () => {
     const dateComment = newDateNote()
 
-    const updatedCommentEdit = {
+    let editedText = (inputTextEdit !== description);
+    let objetoB = findNotes.find(objeto => objeto.id === note.id);
+    let objetoA = notes.find(objeto => objeto.id === note.id);
+
+    objetoB = {
       ...note,
       description: inputTextEdit,
-      date: dateComment
+      date: dateComment,
+      editedText: editedText
     };
 
-    updateNote(updatedCommentEdit);
+    if (objetoB && objetoA) {
+      objetoA = objetoB
+    }
+
+    updateNote(objetoA);
     setIsEditing(false);
+    SetSearchText("")
   };
 
   const handleCancelClick = () => {
@@ -37,7 +47,7 @@ export function Note({ note, deleteNotes, updateNote, newDateNote }) {
   return (
     <div className="note">
       {isEditing ? (
-        <>
+        <div>
           <h3>Edita tu nota:</h3>
           <input
             className="input__field"
@@ -49,7 +59,7 @@ export function Note({ note, deleteNotes, updateNote, newDateNote }) {
             <button
               className="note-card-buttons__comment"
               onClick={handleSaveClick}
-              disabled={!inputTextEdit}
+              disabled={inputTextEdit === description}
             >
               Guardar
             </button>
@@ -63,12 +73,13 @@ export function Note({ note, deleteNotes, updateNote, newDateNote }) {
               Cancelar
             </button>
           </div>
-        </>
+        </div>
       ) : (
         <>
-          <p>
+          <p className="note-card-text">
             {description}, {" "}
             <strong>{date}.</strong>
+            {editedText === true && <span style={{opacity: '.5'}}> (Editado).</span>}
           </p>
           <div className="note-card-buttons">
             <button

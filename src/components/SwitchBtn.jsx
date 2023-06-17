@@ -1,6 +1,6 @@
 import './style/SwitchBtn.css'
 
-export const SwitchBtn = ({ value, fnOnChange }) => {
+export const SwitchBtn = ({ value, handleOnChangeSearch }) => {
   return (
     <div className="switch-container">
       <div className="switch-container-options">
@@ -16,7 +16,7 @@ export const SwitchBtn = ({ value, fnOnChange }) => {
             className='switch-input'
             type="checkbox"
             checked={!value}
-            onChange={fnOnChange}
+            onChange={handleOnChangeSearch}
           />
           <span className="slider"></span>
         </label>

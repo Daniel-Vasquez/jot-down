@@ -10,7 +10,7 @@ import "./Notes.css"
 const Notes = () => {
   const [inputText, setInputText] = useState("")
   const [seacrhNoteForm, setSeacrhNoteForm] = useState("")
-  const [foundNotes, setFoundNotes] = useState("")
+  const [foundNotes, setFoundNotes] = useState([])
   const [switchBtn, setSwitchBtn] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -34,17 +34,19 @@ const Notes = () => {
   });
 
   const deleteNotes = (id) => {
-    const updatedNotes = notes.filter((note) => note.id != id)
-    setNotes(updatedNotes);
+    const updatedNotes = notes.filter((note) => note.id !== id)
+    setNotes(updatedNotes)
+    setSeacrhNoteForm("")
 
     window.localStorage.setItem('noteListStorage', JSON.stringify(updatedNotes))
   };
 
-  const updateNote = (index, updatedNote) => {
+  const updateNote = (noteId, updatedNote) => {
     const updatedNotes = [...notes];
-    updatedNotes[index] = updatedNote;
-    setNotes(updatedNotes);
+    let indice = updatedNotes.findIndex(elemento => elemento.id === noteId);
 
+    updatedNotes[indice] = updatedNote;
+    setNotes(updatedNotes);
     window.localStorage.setItem('noteListStorage', JSON.stringify(updatedNotes))
   };
 
@@ -71,7 +73,7 @@ const Notes = () => {
     setInputText("")
   }
 
-  const searchNote = (e) => {
+  const handleOnChangeSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
     const newNoteFound = notes.filter(note => note.description.toLowerCase().includes(searchValue) || searchValue === "");
 
@@ -79,17 +81,18 @@ const Notes = () => {
     setSeacrhNoteForm(searchValue);
   };
 
-  const addNote = () => {
+  const handleOnChangeSwitch = () => {
     setSwitchBtn(!switchBtn)
     setSeacrhNoteForm("")
+    setInputText("")
   }
 
   return (
     <div className='container-app'>
-      <section className='notes'>
+      <main className='note-form'>
         <SwitchBtn
           value={switchBtn}
-          fnOnChange={addNote}
+          handleOnChangeSearch={handleOnChangeSwitch}
         />
 
         {switchBtn
@@ -98,7 +101,7 @@ const Notes = () => {
               text='Buscar nota:'
               value={seacrhNoteForm}
               setValue={setSeacrhNoteForm}
-              fnOnChage={searchNote}
+              fnOnChage={handleOnChangeSearch}
               arraySize={notes}
             />
           ) : (
@@ -110,7 +113,7 @@ const Notes = () => {
             />
           )
         }
-      </section>
+      </main>
       {seacrhNoteForm !== ''
         ? (
           isLoading
@@ -118,33 +121,47 @@ const Notes = () => {
               <Loading />
             )
             : (
-              <div>
+              <section className='list-notes'>
                 <h2>Notas Encontradas: {foundNotes.length}</h2>
-                {foundNotes.map((note, index) => (
-                  <div key={index} className='note-card'>
-                    <Note
-                      note={note}
-                      deleteNotes={() => deleteNotes(note.id)}
-                      updateNote={(updatedNoteEdit) => updateNote(index, updatedNoteEdit)}
-                      newDateNote={newDateNote}
-                    />
-                    <span className='note-card__span'>{index + 1}</span>
-                  </div>
-                ))}
-              </div>
+                <div className='note-container'>
+                  {foundNotes.map((note, index) => (
+                    <div key={index} className='note-card'>
+                      <Note
+                        notes={notes}
+                        findNotes={foundNotes}
+                        note={note}
+                        deleteNotes={() => deleteNotes(note.id)}
+                        updateNote={(updatedNoteEdit) => updateNote(note.id, updatedNoteEdit)}
+                        newDateNote={newDateNote}
+                        SetSearchText={setSeacrhNoteForm}
+                      />
+                      <span className='note-card__span'>{index + 1}</span>
+                    </div>
+                  ))}
+                </div>
+              </section>
             )
         ) : (
-          <section className='note'>
-            <h1>NOTAS CREADAS: {notes.length}.</h1>
-            {notes.length === 0 && <h2 style={{ opacity: '.7' }}>No hay notas, crea una.</h2>}
+          <section className='list-notes'>
+            <h1 style={{ textAlign: 'center' }}>
+              NOTAS CREADAS: {notes.length}.
+            </h1>
+            {notes.length === 0 &&
+              <h2 style={{ opacity: '.7', textAlign: 'center' }}>
+                No hay notas, crea una.
+              </h2>
+            }
             <div className='note-container'>
               {notes.map((note, index) => (
                 <div key={index} className='note-card'>
                   <Note
+                    notes={notes}
+                    findNotes={foundNotes}
                     note={note}
                     deleteNotes={() => deleteNotes(note.id)}
-                    updateNote={(updatedNoteEdit) => updateNote(index, updatedNoteEdit)}
+                    updateNote={(updatedNoteEdit) => updateNote(note.id, updatedNoteEdit)}
                     newDateNote={newDateNote}
+                    SetSearchText={setSeacrhNoteForm}
                   />
                   <span className='note-card__span'>{index + 1}</span>
                 </div>

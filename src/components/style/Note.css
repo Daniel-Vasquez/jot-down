@@ -1,3 +1,12 @@
+.note {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 140px;
+  height: 100%;
+  justify-content: space-around;
+}
+
 .input__field {
   box-sizing: border-box;
   display: block;
@@ -52,4 +61,8 @@
 
 .note-card-buttons__comment+.note-card-buttons__comment {
   margin-left: calc(0.5rem * 2);
+}
+
+.note-card-text {
+  margin: 0px;
 }
