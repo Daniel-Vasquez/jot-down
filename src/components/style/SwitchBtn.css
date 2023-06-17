@@ -17,6 +17,14 @@
   gap: 10px;
 }
 
+.switch-container-options__span {
+  transition: all .4s;
+}
+
+.switchBtn-state {
+  color: #E91E63;
+}
+
 .switch .switch-input
 {
   display: none;
@@ -61,12 +69,12 @@
 .switch-input:checked + .slider:before
 {
   transform: translateX(0px);
-  background-color: #09f;
+  background-color: #e91e63;
 }
 
 .switch-input:checked + .slider
 {
-  box-shadow: 0 0 0 2px #09f, 0 0 8px #09f;
+  box-shadow: 0 0 0 2px #e91e63, 0 0 8px #e91e63;
 }
 
 .switch200 .slider:before

@@ -4,7 +4,13 @@ export const SwitchBtn = ({ value, fnOnChange }) => {
   return (
     <div className="switch-container">
       <div className="switch-container-options">
-        <span>Agregar nota</span>
+        <span
+          className={
+            `switch-container-options__span ${!value ? 'switchBtn-state' : ''}`
+          }
+        >
+          Agregar nota
+        </span>
         <label className="switch">
           <input
             className='switch-input'
@@ -14,7 +20,13 @@ export const SwitchBtn = ({ value, fnOnChange }) => {
           />
           <span className="slider"></span>
         </label>
-        <span>Buscar nota</span>
+        <span
+          className={
+            `switch-container-options__span ${value ? 'switchBtn-state' : ''}`
+          }
+        >
+          Buscar nota
+        </span>
       </div>
     </div>
   )

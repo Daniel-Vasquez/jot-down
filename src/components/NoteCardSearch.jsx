@@ -1,3 +1,5 @@
+import './style/NoteCard.css'
+
 export const NoteCardSearch = ({ text, value, setValue, fnOnChage, arraySize }) => {
   return (
     <div className="note-card">

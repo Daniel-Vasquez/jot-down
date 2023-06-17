@@ -16,9 +16,14 @@ const Notes = () => {
 
   useEffect(() => {
     setIsLoading(true)
-    setTimeout(() => {
+
+    const loadingId = setTimeout(() => {
       setIsLoading(false)
     }, 1500)
+
+    return () => {
+      clearTimeout(loadingId);
+    }
   }, [seacrhNoteForm])
 
   const [notes, setNotes] = useState(() => {

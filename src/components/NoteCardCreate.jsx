@@ -1,4 +1,4 @@
-import React from 'react'
+import './style/NoteCard.css'
 
 export const NoteCardCreate = ({text, value, fnHandleChange, fnOnClick}) => {
   return (
