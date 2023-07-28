@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import { LinkGenerator } from './LinkGenerator';
+import { capitalizeFirstLetter } from '../utils';
 import './style/Note.css'
 
 export function Note({ notes, findNotes, note, deleteNotes, updateNote, newDateNote, SetSearchText }) {
   const { description, date, editedText } = note
   const [isEditing, setIsEditing] = useState(false);
-  const [inputTextEdit, setInputTextEdit] = useState(description ? description : "")
-
-  const [updatedDescription, setUpdatedDescription] = useState(description);
+  const [inputTextEdit, setInputTextEdit] = useState('')
+  const [updatedDescription, setUpdatedDescription] = useState('');
 
   const handleUpdateClick = () => {
     setIsEditing(true);
@@ -14,7 +15,6 @@ export function Note({ notes, findNotes, note, deleteNotes, updateNote, newDateN
 
   const handleSaveClick = () => {
     const dateComment = newDateNote()
-
     let editedText = (inputTextEdit !== description);
     let objetoB = findNotes.find(objeto => objeto.id === note.id);
     let objetoA = notes.find(objeto => objeto.id === note.id);
@@ -49,11 +49,12 @@ export function Note({ notes, findNotes, note, deleteNotes, updateNote, newDateN
       {isEditing ? (
         <div>
           <h3>Edita tu nota:</h3>
-          <input
+          <textarea
             className="input__field"
-            value={inputTextEdit}
+            defaultValue={description ? description : ''}
             placeholder='Escribe tu comentario'
             onChange={handleChange}
+            style={{ minHeight: '100px', width: '100%', resize: 'none', }}
           />
           <div className="note-card-buttons">
             <button
@@ -76,11 +77,18 @@ export function Note({ notes, findNotes, note, deleteNotes, updateNote, newDateN
         </div>
       ) : (
         <>
-          <p className="note-card-text">
-            {description}, {" "}
-            <strong>{date}.</strong>
-            {editedText === true && <span style={{opacity: '.5'}}> (Editado).</span>}
-          </p>
+          <div>
+            <LinkGenerator
+              text={capitalizeFirstLetter(description)}
+            />
+            <p style={{ margin: '3px 0' }}>
+              <strong>{date}.</strong>
+              {editedText === true &&
+                <span style={{ opacity: '.5' }}>, (Editado).</span>
+              }
+            </p>
+
+          </div>
           <div className="note-card-buttons">
             <button
               className="note-card-buttons__comment"

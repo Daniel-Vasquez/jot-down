@@ -3,7 +3,7 @@ import './style/NoteCard.css'
 export const NoteCardCreate = ({text, value, fnHandleChange, fnOnClick}) => {
   return (
     <div className="note-card">
-      <h2>
+      <h2 style={{color: 'rgb(233, 30, 99)'}}>
         {text}
       </h2>
       <label className="note-card-input">

@@ -4,10 +4,15 @@ import { Note } from './components/Note.jsx'
 import { Loading } from './components/Loading.jsx';
 import { NoteCardSearch } from './components/NoteCardSearch.jsx';
 import { NoteCardCreate } from './components/NoteCardCreate.jsx';
-import { SwitchBtn } from './components/SwitchBtn.jsx';
 import "./Notes.css"
 
 const Notes = () => {
+  const [notes, setNotes] = useState(() => {
+    const myNoteListStorage = window.localStorage.getItem('noteListStorage')
+    return myNoteListStorage
+      ? JSON.parse(myNoteListStorage)
+      : []
+  });
   const [inputText, setInputText] = useState("")
   const [seacrhNoteForm, setSeacrhNoteForm] = useState("")
   const [foundNotes, setFoundNotes] = useState([])
@@ -24,17 +29,11 @@ const Notes = () => {
     return () => {
       clearTimeout(loadingId);
     }
-  }, [seacrhNoteForm])
-
-  const [notes, setNotes] = useState(() => {
-    const myNoteListStorage = window.localStorage.getItem('noteListStorage')
-    return myNoteListStorage
-      ? JSON.parse(myNoteListStorage)
-      : []
-  });
+  }, [seacrhNoteForm, notes])
 
   const deleteNotes = (id) => {
     const updatedNotes = notes.filter((note) => note.id !== id)
+
     setNotes(updatedNotes)
     setSeacrhNoteForm("")
 
@@ -90,29 +89,19 @@ const Notes = () => {
   return (
     <div className='container-app'>
       <main className='note-form'>
-        <SwitchBtn
-          value={switchBtn}
-          handleOnChangeSearch={handleOnChangeSwitch}
+        <NoteCardCreate
+          text='Crear nota:'
+          value={inputText}
+          fnHandleChange={handleChange}
+          fnOnClick={handleClick}
         />
-
-        {switchBtn
-          ? (
-            <NoteCardSearch
-              text='Buscar nota:'
-              value={seacrhNoteForm}
-              setValue={setSeacrhNoteForm}
-              fnOnChage={handleOnChangeSearch}
-              arraySize={notes}
-            />
-          ) : (
-            <NoteCardCreate
-              text='Crear nota:'
-              value={inputText}
-              fnHandleChange={handleChange}
-              fnOnClick={handleClick}
-            />
-          )
-        }
+        <NoteCardSearch
+          text='Buscar nota:'
+          value={seacrhNoteForm}
+          setValue={setSeacrhNoteForm}
+          fnOnChage={handleOnChangeSearch}
+          arraySize={notes}
+        />
       </main>
       {seacrhNoteForm !== ''
         ? (
