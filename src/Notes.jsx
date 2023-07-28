@@ -16,7 +16,6 @@ const Notes = () => {
   const [inputText, setInputText] = useState("")
   const [seacrhNoteForm, setSeacrhNoteForm] = useState("")
   const [foundNotes, setFoundNotes] = useState([])
-  const [switchBtn, setSwitchBtn] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
@@ -80,12 +79,6 @@ const Notes = () => {
     setSeacrhNoteForm(searchValue);
   };
 
-  const handleOnChangeSwitch = () => {
-    setSwitchBtn(!switchBtn)
-    setSeacrhNoteForm("")
-    setInputText("")
-  }
-
   return (
     <div className='container-app'>
       <main className='note-form'>
@@ -103,6 +96,7 @@ const Notes = () => {
           arraySize={notes}
         />
       </main>
+      
       {seacrhNoteForm !== ''
         ? (
           isLoading

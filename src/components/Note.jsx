@@ -10,18 +10,19 @@ export function Note({ notes, findNotes, note, deleteNotes, updateNote, newDateN
   const [updatedDescription, setUpdatedDescription] = useState('');
 
   const handleUpdateClick = () => {
+    setInputTextEdit(description)
     setIsEditing(true);
   };
 
   const handleSaveClick = () => {
     const dateComment = newDateNote()
-    let editedText = (inputTextEdit !== description);
+    let editedText = inputTextEdit && inputTextEdit !== description ? true : false;
     let objetoB = findNotes.find(objeto => objeto.id === note.id);
     let objetoA = notes.find(objeto => objeto.id === note.id);
 
     objetoB = {
       ...note,
-      description: inputTextEdit,
+      description: inputTextEdit ? inputTextEdit : description,
       date: dateComment,
       editedText: editedText
     };
@@ -112,5 +113,9 @@ export function Note({ notes, findNotes, note, deleteNotes, updateNote, newDateN
     </div>
   );
 }
+
+// MiComponente.propTypes = {
+//   notes: PropTypes.arrayOf(PropTypes.string).isRequired,
+// };
 
 export default Note
