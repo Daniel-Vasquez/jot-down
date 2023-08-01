@@ -3,7 +3,7 @@ import { LinkGenerator } from './LinkGenerator';
 import { capitalizeFirstLetter } from '../utils';
 import './style/Note.css'
 
-export function Note({ notes, findNotes, note, deleteNotes, updateNote, newDateNote, SetSearchText }) {
+export function Note({ index, notes, findNotes, note, deleteNotes, updateNote, newDateNote, SetSearchText }) {
   const { description, date, editedText } = note
   const [isEditing, setIsEditing] = useState(false);
   const [inputTextEdit, setInputTextEdit] = useState('')
@@ -46,76 +46,86 @@ export function Note({ notes, findNotes, note, deleteNotes, updateNote, newDateN
   }
 
   return (
-    <div className="note">
-      {isEditing ? (
-        <div>
-          <h3>Edita tu nota:</h3>
-          <textarea
-            className="input__field"
-            defaultValue={description ? description : ''}
-            placeholder='Escribe tu comentario'
-            onChange={handleChange}
-            style={{ minHeight: '100px', width: '100%', resize: 'none', }}
-          />
-          <div className="note-card-buttons">
-            <button
-              className="note-card-buttons__comment"
-              onClick={handleSaveClick}
-              disabled={inputTextEdit === description}
-            >
-              Guardar
-            </button>
-            <button
-              className="note-card-buttons__comment"
-              onClick={handleCancelClick}
-              style={{
-                backgroundColor: 'red'
-              }}
-            >
-              Cancelar
-            </button>
-          </div>
-        </div>
-      ) : (
-        <>
+    <div className='note-card'>
+      <div className="note">
+        {isEditing ? (
           <div>
-            <LinkGenerator
-              text={capitalizeFirstLetter(description)}
+            <h3>Edita tu nota:</h3>
+            <textarea
+              className="input__field"
+              defaultValue={description ? description : ''}
+              placeholder='Escribe tu comentario'
+              onChange={handleChange}
+              style={{ minHeight: '100px', width: '100%', resize: 'none', }}
             />
-            <p style={{ margin: '3px 0' }}>
-              <strong>{date}.</strong>
-              {editedText === true &&
-                <span style={{ opacity: '.5' }}>, (Editado).</span>
-              }
-            </p>
-
+            <div className="note-card-buttons">
+              <button
+                className="note-card-buttons__comment"
+                onClick={handleSaveClick}
+                disabled={inputTextEdit === description}
+              >
+                Guardar
+              </button>
+              <button
+                className="note-card-buttons__comment"
+                onClick={handleCancelClick}
+                style={{
+                  backgroundColor: 'red'
+                }}
+              >
+                Cancelar
+              </button>
+            </div>
+            <span className='note-card__span'>{index + 1}</span>
           </div>
-          <div className="note-card-buttons">
-            <button
-              className="note-card-buttons__comment"
-              onClick={handleUpdateClick}
-            >
-              Editar
-            </button>
-            <button
-              className="note-card-buttons__comment"
-              onClick={deleteNotes}
-              style={{
-                backgroundColor: '#e91e63'
-              }}
-            >
-              Eliminar
-            </button>
+        ) : (
+          <>
+            <div>
+              <LinkGenerator
+                text={capitalizeFirstLetter(description)}
+              />
+              <p style={{ margin: '3px 0' }}>
+                <strong>{date}.</strong>
+                {editedText === true &&
+                  <span style={{ opacity: '.5' }}>, (Editado).</span>
+                }
+              </p>
 
-          </div>
-        </>
-      )}
+            </div>
+            <div className="note-card-buttons">
+              <button
+                className="note-card-buttons__comment"
+                onClick={handleUpdateClick}
+              >
+                Editar
+              </button>
+              <button
+                className="note-card-buttons__comment"
+                onClick={deleteNotes}
+                style={{
+                  backgroundColor: '#e91e63'
+                }}
+              >
+                Eliminar
+              </button>
+            </div>
+            <span className='note-card__span'>{index + 1}</span>
+          </>
+        )}
+      </div>
     </div>
+
   );
 }
 
-// MiComponente.propTypes = {
-//   notes: PropTypes.arrayOf(PropTypes.string).isRequired,
+// Note.propTypes = {
+//   notes: document.arrayOf(document.string).isRequired,
+//   findNotes: document.arrayOf(document.string).isRequired,
+//   note: document.arrayOf(document.string).isRequired,
+//   deleteNotes: document.arrayOf(document.string).isRequired,
+//   updateNote: document.arrayOf(document.string).isRequired,
+//   newDateNote: document.arrayOf(document.string).isRequired,
+//   SetSearchText: document.arrayOf(document.string).isRequired,
 // };
 
 export default Note

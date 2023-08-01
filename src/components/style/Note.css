@@ -1,3 +1,20 @@
+/* Estas son mis imagenes */
+.note-card { 
+  border-radius: 5px;
+  border: 3px solid var(--color-shadow, currentColor);
+  box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, currentColor);
+  padding: 10px 20px;
+  margin: 30px 15px;
+  position: relative;
+
+  view-timeline-name: --noteCard;
+  view-timeline-axis: block;
+  animation-timeline: --noteCard;
+  animation-name: show;
+  animation-range: entry 25% cover 30%;
+  animation-fill-mode: both;
+}
+
 .note {
   display: flex;
   flex-direction: column;
@@ -80,4 +97,33 @@
 .note-card-text__link span {
   border-bottom: 0.05em solid;
   border-color: rgba(255, 255, 255, 0.283);
+}
+
+.note-card__span {
+  position: absolute;
+  right: 10px;
+  top: -25px;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 20px;
+  color: white;
+  background-color: #E91E63;
+}
+
+@keyframes show {
+  from {
+    opacity: 0;
+    scale: 25%;
+  } 
+
+  to {
+    opacity: 1;
+    scale: 100%;
+  }
 }
