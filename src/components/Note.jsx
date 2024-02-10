@@ -117,15 +117,3 @@ export function Note({ index, notes, findNotes, note, deleteNotes, updateNote, n
 
   );
 }
-
-// Note.propTypes = {
-//   notes: document.arrayOf(document.string).isRequired,
-//   findNotes: document.arrayOf(document.string).isRequired,
-//   note: document.arrayOf(document.string).isRequired,
-//   deleteNotes: document.arrayOf(document.string).isRequired,
-//   updateNote: document.arrayOf(document.string).isRequired,
-//   newDateNote: document.arrayOf(document.string).isRequired,
-//   SetSearchText: document.arrayOf(document.string).isRequired,
-// };
-
-export default Note

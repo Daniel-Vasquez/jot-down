@@ -9,7 +9,7 @@ export const SwitchBtn = ({ value, handleOnChangeSearch }) => {
             `switch-container-options__span ${!value ? 'switchBtn-state' : ''}`
           }
         >
-          Agregar nota
+          Crear nota
         </span>
         <label className="switch">
           <input
