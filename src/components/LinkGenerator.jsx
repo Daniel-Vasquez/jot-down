@@ -25,7 +25,7 @@ export const LinkGenerator = ({ text }) => {
   }
 
   return (
-    <p className="note-card-text">
+    <p className="note-card-text py-1 text-black dark:text-white">
       {generateLinkElements()}
     </p>
   );

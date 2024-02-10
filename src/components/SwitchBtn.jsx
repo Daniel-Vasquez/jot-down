@@ -1,6 +1,6 @@
 import './style/SwitchBtn.css'
 
-export const SwitchBtn = ({ value, handleOnChangeSearch }) => {
+export const SwitchBtn = ({ text1, text2, value, handleOnChangeSearch }) => {
   return (
     <div className="switch-container">
       <div className="switch-container-options">
@@ -9,7 +9,7 @@ export const SwitchBtn = ({ value, handleOnChangeSearch }) => {
             `switch-container-options__span ${!value ? 'switchBtn-state' : ''}`
           }
         >
-          Crear nota
+          {text1}
         </span>
         <label className="switch">
           <input
@@ -25,7 +25,7 @@ export const SwitchBtn = ({ value, handleOnChangeSearch }) => {
             `switch-container-options__span ${value ? 'switchBtn-state' : ''}`
           }
         >
-          Buscar nota
+          {text2}
         </span>
       </div>
     </div>

@@ -19,10 +19,12 @@
 
 .switch-container-options__span {
   transition: all .4s;
+  opacity: 0.3;
 }
 
 .switchBtn-state {
   color: #E91E63;
+  opacity: 1;
 }
 
 .switch .switch-input

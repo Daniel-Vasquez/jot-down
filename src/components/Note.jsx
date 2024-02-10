@@ -46,13 +46,13 @@ export function Note({ index, notes, findNotes, note, deleteNotes, updateNote, n
   }
 
   return (
-    <div className='note-card'>
+    <div className='note-card bg-white dark:bg-gray-700'>
       <div className="note">
         {isEditing ? (
           <div>
             <h3>Edita tu nota:</h3>
             <textarea
-              className="input__field"
+              className="input__field text-black dark:text-white bg-white dark:bg-gray-700"
               defaultValue={description ? description : ''}
               placeholder='Escribe tu comentario'
               onChange={handleChange}
@@ -84,7 +84,7 @@ export function Note({ index, notes, findNotes, note, deleteNotes, updateNote, n
               <LinkGenerator
                 text={capitalizeFirstLetter(description)}
               />
-              <p style={{ margin: '3px 0' }}>
+              <p className='text-black dark:text-white'>
                 <strong>{date}.</strong>
                 {editedText === true &&
                   <span style={{ opacity: '.5' }}>, (Editado).</span>

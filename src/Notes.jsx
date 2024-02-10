@@ -53,78 +53,92 @@ const Notes = () => {
   }
 
   return (
-    <div className='container-app'>
-      <main className='note-form'>
-        <SwitchBtn
-          value={switchBtn}
-          handleOnChangeSearch={handleOnChangeSwitch}
-        />
+    <div className='bg-white dark:bg-gray-800'>
+      <div className='container-app bg-white dark:bg-gray-800'>
+        <main className='note-form'>
+          <SwitchBtn
+            text1="Crear nota"
+            text2="Buscar nota"
+            value={switchBtn}
+            handleOnChangeSearch={handleOnChangeSwitch}
+          />
 
-        {switchBtn
-          ? (<NoteCardSearch
-            text='Buscar nota:'
-            value={seacrhNoteForm}
-            setValue={setSeacrhNoteForm}
-            fnOnChage={handleSearch}
-            arraySize={notes}
-          />)
-          : (<NoteCardCreate
-            text='Crear nota:'
-            value={inputText}
-            fnHandleChange={handleChange}
-            fnOnClick={handleCreate}
-          />)
+          {switchBtn
+            ? (<NoteCardSearch
+              text='Buscar nota:'
+              value={seacrhNoteForm}
+              setValue={setSeacrhNoteForm}
+              fnOnChage={handleSearch}
+              arraySize={notes}
+            />)
+            : (<NoteCardCreate
+              text='Crear nota:'
+              value={inputText}
+              fnHandleChange={handleChange}
+              fnOnClick={handleCreate}
+            />)
+          }
+        </main>
+
+        {seacrhNoteForm !== ''
+          ? (
+            <section className='list-notes'>
+              <h1 className='text-center text-2xl my-3 font-extrabold text-black dark:text-white'>Notas Encontradas: {foundNotes.length}</h1>
+              <div
+                class="bg-blue-light flex flex-col gap-4 max-h-96 rounded-xl p-5 bg-white dark:bg-gray-700"
+                style={{
+                  overflowY: "scroll",
+                  scrollbarColor: "rgb(36, 99, 235) transparent",
+                }}
+              >
+                {foundNotes.map((note, index) => (
+                  <Note
+                    key={index}
+                    index={index}
+                    notes={notes}
+                    findNotes={foundNotes}
+                    note={note}
+                    deleteNotes={() => handleDelete(note.id)}
+                    updateNote={(updatedNoteEdit) => handleUpdate(note.id, updatedNoteEdit)}
+                    newDateNote={newDateNote}
+                    SetSearchText={setSeacrhNoteForm}
+                  />
+                ))}
+              </div>
+            </section>
+          ) : (
+            <section className='list-notes'>
+              <h1 className='text-center text-2xl my-3 font-extrabold text-black dark:text-white'>
+                NOTAS CREADAS: {notes.length}
+              </h1>
+              {notes.length === 0 &&
+                <h2 style={{ opacity: '.5', textAlign: 'center' }}>
+                  No hay notas, crea una.
+                </h2>
+              }
+              <div class="bg-blue-light flex flex-col gap-4 max-h-96 rounded-xl p-5 bg-white dark:bg-gray-700"
+                style={{
+                  overflowY: "scroll",
+                  scrollbarColor: "rgb(36, 99, 235) transparent",
+                }}>
+                {notes.map((note, index) => (
+                  <Note
+                    key={index}
+                    index={index}
+                    notes={notes}
+                    findNotes={foundNotes}
+                    note={note}
+                    deleteNotes={() => handleDelete(note.id)}
+                    updateNote={(updatedNoteEdit) => handleUpdate(note.id, updatedNoteEdit)}
+                    newDateNote={newDateNote}
+                    SetSearchText={setSeacrhNoteForm}
+                  />
+                ))}
+              </div>
+            </section>
+          )
         }
-      </main>
-
-      {seacrhNoteForm !== ''
-        ? (
-          <section className='list-notes'>
-            <h2>Notas Encontradas: {foundNotes.length}</h2>
-            <div className='note-container'>
-              {foundNotes.map((note, index) => (
-                <Note
-                  key={index}
-                  index={index}
-                  notes={notes}
-                  findNotes={foundNotes}
-                  note={note}
-                  deleteNotes={() => handleDelete(note.id)}
-                  updateNote={(updatedNoteEdit) => handleUpdate(note.id, updatedNoteEdit)}
-                  newDateNote={newDateNote}
-                  SetSearchText={setSeacrhNoteForm}
-                />
-              ))}
-            </div>
-          </section>
-        ) : (
-          <section className='list-notes'>
-            <h1 style={{ textAlign: 'center' }}>
-              NOTAS CREADAS: {notes.length}.
-            </h1>
-            {notes.length === 0 &&
-              <h2 style={{ opacity: '.5', textAlign: 'center' }}>
-                No hay notas, crea una.
-              </h2>
-            }
-            <div className='note-container'>
-              {notes.map((note, index) => (
-                <Note
-                  key={index}
-                  index={index}
-                  notes={notes}
-                  findNotes={foundNotes}
-                  note={note}
-                  deleteNotes={() => handleDelete(note.id)}
-                  updateNote={(updatedNoteEdit) => handleUpdate(note.id, updatedNoteEdit)}
-                  newDateNote={newDateNote}
-                  SetSearchText={setSeacrhNoteForm}
-                />
-              ))}
-            </div>
-          </section>
-        )
-      }
+      </div>
     </div>
   )
 }
