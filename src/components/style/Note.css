@@ -4,7 +4,7 @@
   border: 3px solid var(--color-shadow, currentColor);
   box-shadow: 0.5rem 0.5rem 0 var(--color-shadow, currentColor);
   padding: 10px 20px;
-  margin: 30px 15px;
+
   position: relative;
 
   view-timeline-name: --noteCard;

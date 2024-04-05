@@ -54,7 +54,7 @@ const Notes = () => {
 
   return (
     <div className='bg-white dark:bg-gray-800'>
-      <div className='container-app bg-white dark:bg-gray-800'>
+      <div className='container-app bg-white sm:h-screen dark:bg-gray-800'>
         <main className='note-form'>
           <SwitchBtn
             text1="Crear nota"
@@ -107,34 +107,38 @@ const Notes = () => {
               </div>
             </section>
           ) : (
-            <section className='list-notes'>
+            <section className='list-notes min-h-96'>
               <h1 className='text-center text-2xl my-3 font-extrabold text-black dark:text-white'>
                 NOTAS CREADAS: {notes.length}
               </h1>
-              {notes.length === 0 &&
-                <h2 style={{ opacity: '.5', textAlign: 'center' }}>
-                  No hay notas, crea una.
-                </h2>
+              {notes.length === 0
+                ? (
+                  <h2 className='text-xl text-center text-black dark:text-white'>
+                    No hay notas, crea una.
+                  </h2>
+                )
+                : (
+                  <div class="bg-blue-light flex flex-col gap-14 max-h-96 rounded-xl py-7 px-5 bg-white mb-16 dark:bg-gray-700 sm:mb-0"
+                    style={{
+                      overflowY: "scroll",
+                      scrollbarColor: "rgb(36, 99, 235) transparent",
+                    }}>
+                    {notes.map((note, index) => (
+                      <Note
+                        key={index}
+                        index={index}
+                        notes={notes}
+                        findNotes={foundNotes}
+                        note={note}
+                        deleteNotes={() => handleDelete(note.id)}
+                        updateNote={(updatedNoteEdit) => handleUpdate(note.id, updatedNoteEdit)}
+                        newDateNote={newDateNote}
+                        SetSearchText={setSeacrhNoteForm}
+                      />
+                    ))}
+                  </div>
+                )
               }
-              <div class="bg-blue-light flex flex-col gap-4 max-h-96 rounded-xl p-5 bg-white dark:bg-gray-700"
-                style={{
-                  overflowY: "scroll",
-                  scrollbarColor: "rgb(36, 99, 235) transparent",
-                }}>
-                {notes.map((note, index) => (
-                  <Note
-                    key={index}
-                    index={index}
-                    notes={notes}
-                    findNotes={foundNotes}
-                    note={note}
-                    deleteNotes={() => handleDelete(note.id)}
-                    updateNote={(updatedNoteEdit) => handleUpdate(note.id, updatedNoteEdit)}
-                    newDateNote={newDateNote}
-                    SetSearchText={setSeacrhNoteForm}
-                  />
-                ))}
-              </div>
             </section>
           )
         }
