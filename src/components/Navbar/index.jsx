@@ -15,8 +15,8 @@ export const Navbar = ({ children }) => {
 
   return (
     <>
-      <div className="dark:bg-gray-800 flex gap-4 items-center justify-between w-full text-white p-4 dark:text-gray-200">
-        <h1 className="text-2xl font-black text-black hover:opacity-80 cursor-pointer dark:text-white dark:bg-gray-800">
+      <div className="dark:bg-gray-800 flex gap-4 items-center justify-between w-full text-white py-5 px-7 dark:text-gray-200">
+        <h1 className="text-2xl font-black text-black hover:opacity-80 dark:text-white dark:bg-gray-800">
           Daniel Vásquez
         </h1>
 

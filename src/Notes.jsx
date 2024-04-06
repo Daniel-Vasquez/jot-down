@@ -118,7 +118,7 @@ const Notes = () => {
                   </h2>
                 )
                 : (
-                  <div class="bg-blue-light flex flex-col gap-14 max-h-96 rounded-xl py-7 px-5 bg-white mb-16 dark:bg-gray-700 sm:mb-0"
+                  <div class="bg-gray-200 flex flex-col gap-14 max-h-96 rounded-xl py-7 px-5 mb-16 dark:bg-gray-700 sm:mb-0"
                     style={{
                       overflowY: "scroll",
                       scrollbarColor: "rgb(36, 99, 235) transparent",
